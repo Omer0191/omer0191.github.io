@@ -1,14 +1,11 @@
-# abc4pwm
 
-============================Affinity Based Clustering for Position weight Matrices============================
+============================Affinity Based Clustering for Position Weight Matrices============================
 
 
-A new tool for the clustering of Transcription Factors is designed. Details are as follows
+A new tool for the clustering of Transcription Factors is designed that work on RNAseq, ChIPseq, Human Transfaction factors,
+and other biological datasets to give easy interpretition for biologists. Details are as follows
 
-usage: abc4pwm [-h] {cleandatabase_for_classification, classification, clustering, representative_motif, quality_assessment, visualize, plot_cluster_motifs, text_tfdb}
-
-positional arguments:
-{cleandatabase_for_classification,classification,clustering,representative_motif,quality_assessment,visualize,plot_cluster_motifs,text_tfdb}                        
+usage: abc4pwm [-h] {cleandatabase_for_classification, classification, clustering, representative_motif, quality_assessment, visualize, plot_cluster_motifs, text_tfdb, searching,conversion,ensemble_learning,ensemble_investigate}
 
 
 Tasks available for using:
@@ -20,6 +17,7 @@ Tasks available for using:
     visualize
     plot_cluster_motifs
     text_tfdb
+    conversion
     ensemble_learning
     ensemble_investigate
     conversion
@@ -35,6 +33,7 @@ You should run the pipeline in the following order to generate all necessary fil
 3- 'clustering ' :In the step apply clustering on output folder produced by step 2 
 4- 'quality_assessment' :This step calculates quality of clusters and remove bad quality pwms from clusters 
 5- 'representative_Motif': This step prepare a representative motif of the cluster
+6- 'plot_cluster_motifs': This will plot the motifs inside cluster in along with the names in a pdf file. Also generate a text report.
 
 Example of tasks:
 
@@ -78,11 +77,14 @@ optional arguments:
 
 usage: abc4pwm clustering [-h] [--dbd_folders_directory FOLDER]
                                     [--output_directory FOLDER]
+                                    [--in_dbd NUMBER]
                                     [--minimum_pwms_in_dbd NUMBER]
-                                    [--mean_threshold NUMBER]
-                                    [--z_score_threshold NUMBER]
-                                    [--top_occurrences NUMBER]
-                                    [--occurrences_threshold NUMBER]
+                                    [--max_processors NUMBER]
+                                    [--seed Number]
+                                    [--damp Number]
+                                    [--max_iter Number]
+                                    [--convergence_iter Number] [--preference Number]
+
 
 Arguments:
 --dbd_folders_directory 	FOLDER	This folder should contain DBD folders. Output of classifcation_pwm should be this task input
@@ -90,11 +92,18 @@ Arguments:
 
 
 optional arguments:
-  -h, --help            show this help message and exit
-  --in_dbd 			NUMBER       	(Optional) This should be 0 if you want to cluster all together (non DBD) 1 by default 
-  --minimum_pwms_in_dbd 	NUMBER		(Optional) minimum number of pwms in a dbd to be clusteredDefault value is 5
-  --max_processors 		NUMBER		(Optional) maximum number of processors for paralle processingDefault value is 5
-
+  -h, --help                show this help message and exit
+  --in_dbd 			        NUMBER      This should be 0 if you want to cluster all together (non DBD) 1 by default
+  --minimum_pwms_in_dbd 	NUMBER		minimum number of pwms in a dbd to be clusteredDefault value is 5
+  --max_processors 		    NUMBER		maximum number of processors for paralle processingDefault value is 5
+  --seed                    Number      Seed for random selection of cluster center. Input 1 to fix. Default Seed is 0.
+  --damp                    Number      Damping factor (between 0.5 and 1) is the extent to which the current value is maintained relative to incoming values (weighted 1 - damping).
+                                        This in order to avoid numerical oscillations when updating these values (messages).
+  --max_iter                Number      Maximum number of iterations.
+  --convergence_iter        Number      Number of iterations with no change in the number of estimated clusters that stops the convergence.
+  --preference              Number      Preferences for each point - points with larger values of preferences are more likely to be chosen as exemplars.
+                                        The number of exemplars, ie of clusters, is influenced by the input preferences value. If the preferences are not passed as arguments,
+                                        they will be set to the median of the input similarities.
 
 
 ----------------------------------quality_assessment----------------------------------
@@ -117,17 +126,18 @@ Arguments:
 optional arguments:
   -h, --help            show this help message and exit
   --output_path_for_quality_assessment_file 	FOLDER	(Optional) folder where quality assessment .json file will be stored.Default, data/in/
-  --load_new_assesment 				NUMBER	(Optional)1 if you want to do new assesment, 0 if you want load existing assesment
-  --mean_threshold 				NUMBER	(Optional) mean threshold for uncertain clustersDefault value is 0.80
-  --z_score_threshold 				NUMBER	(Optional) max negative threshold of zscore for similarity values of pwmDefault value is -1.0
-  --top_occurrences 				NUMBER	(Optional) This value corresponds to occurrence of a pwm less than a threshold z-scoreValue is between 0 to 1. Default value is 0.15
-  --occurrences_threshold 			NUMBER	(Optional) This value corresponds to threshold of occurrence from top occurrencesValue is between 0 to 1. Default value is 0.05
+  --load_new_assesment 				NUMBER	 1 if you want to do new assesment, 0 if you want load existing assesment
+  --mean_threshold 				    NUMBER	 mean threshold for uncertain clustersDefault value is 0.80
+  --z_score_threshold 				NUMBER	 max negative threshold of zscore for similarity values of pwmDefault value is -1.0
+  --top_occurrences 				NUMBER	 This value corresponds to occurrence of a pwm less than a threshold z-scoreValue is between 0 to 1. Default value is 0.15
+  --occurrences_threshold 			NUMBER	 This value corresponds to threshold of occurrence from top occurrencesValue is between 0 to 1. Default value is 0.05
 
 
 ----------------------------------representative_motif------------------------------------
 usage: abc4pwm representative_motif [-h] [--path_to_clusters FOLDER]
                                           [--dbd string] 
-					  [--clusters string]
+					                      [--clusters string]
+                                          [--ic NUMBER]
                                           [--best_match_initial_motif NUMBER]
                                           [--mean_threshold NUMBER]
                                           [--z_score_threshold NUMBER]
@@ -140,13 +150,13 @@ Arguments:
 optional arguments:
   -h, --help            show this help message and exit
 
-  --dbd 			string          Default value is 'selected'. Representative of clusters pathmentioned in --path_to_clusters parameter will be calculated.  						Write 'all' if representative calculation of all dbd and all clusters is required.
-  --best_match_initial_motif 	NUMBER		(Optional) This should be 0 if you want initial motif to be random 1 by default 
-  --mean_threshold	 	NUMBER		(Optional) mean threshold for uncertain clustersDefault value is 0.80
-  --z_score_threshold	 	NUMBER		(Optional) max negative threshold of zscore for similarity values of pwmDefault value is -1.0
-  --top_occurrences 		NUMBER		(Optional) This value corresponds to occurrence of a pwm less than a threshold z-scoreValue is between 0 to 1. Default value is 0.15
-  --occurrences_threshold 	NUMBER		(Optional) This value corresponds to threshold of occurrence from top occurrencesValue is between 0 to 1. Default value is 0.05
-  --ic 				NUMBER          (Optional) Information Content for trimming edges.Default value is 0.4
+      --dbd 			            string      Default value is 'selected'. Representative of clusters pathmentioned in --path_to_clusters parameter will be calculated.  						Write 'all' if representative calculation of all dbd and all clusters is required.
+      --best_match_initial_motif 	NUMBER		This should be 0 if you want initial motif to be random 1 by default
+      --mean_threshold	 	        NUMBER		mean threshold for uncertain clustersDefault value is 0.80
+      --z_score_threshold	 	    NUMBER		max negative threshold of zscore for similarity values of pwmDefault value is -1.0
+      --top_occurrences 		    NUMBER		This value corresponds to occurrence of a pwm less than a threshold z-scoreValue is between 0 to 1. Default value is 0.15
+      --occurrences_threshold 	    NUMBER		This value corresponds to threshold of occurrence from top occurrencesValue is between 0 to 1. Default value is 0.05
+      --ic			                NUMBER      Information Content for trimming edges.Default value is 0.4
 
 ----------------------------------plot_cluster_motifs----------------------------------
 usage: abc4pwm plot_cluster_motifs [-h] 
@@ -175,54 +185,63 @@ usage: abc4pwm visualize [-h]
 
 Arguments:
   --path_to_folder_of_assessment_file 	FOLDER		folder path from where quality assessment file should be taken
-  --path_to_folder_of_DBDs 		FOLDER		this folder should contain clustered DBD folders
-  --output_folder 			FOLDER		folder where visualization output should be saved
-  --dbd_for_plot 			FOLDER		path of dbd which is needed to be visualized. Write 'all' if you want to plot for all dbds.
+  --path_to_folder_of_DBDs 		        FOLDER		this folder should contain clustered DBD folders
+  --output_folder 			            FOLDER		folder where visualization output should be saved
+  --dbd_for_plot 			            FOLDER		path of dbd which is needed to be visualized. Write 'all' if you want to plot for all dbds.
 
 
 optional arguments:
   -h, --help            show this help message and exit
-  --task 				string         (Optional) Specify visualization taskFor example, boxplot, pichart, etc Default is boxplot.
+  --task 				string         Specify visualization taskFor example, boxplot, pichart, etc Default is boxplot.
 
 
 
 
 
 ----------------------------------text_tfdb---------------------------------
-usage: abc4pwm text_tfdb [-h] [--pwm_files_directory FOLDER]
+usage: abc4pwm text_tfdb [-h]   [--pwm_files_directory FOLDER]
+                                [--output_directory FOLDER]
 
 optional arguments:
   -h, --help            show this help message and exit
 Arguments:
   --pwm_files_directory FOLDER      This folder should contain the input pwm files in . mlp format
-
-
+  --output_directory      FOLDER      This folder should to output folder. Boxplot will go to this folder
 
 ----------------------------------searching----------------------------------
 usage: abc4pwm searching [-h] 
-			[--pwm . mlp file] 
+			[--pwm file]
 			[--db_path path or list]
-                        [--output_directory FOLDER] 
+            [--output_directory FOLDER]
 			[--db_type string]
-                        [--db_format string] 
+            [--db_format string]
 			[--top_n NUMBER]
+		    [--tf_name string]
+            [--input_count NUMBER]
+            [--db_count NUMBER]
+            [--db_file_type String]
+            [--input_file_type String]
+            [--input_prob Number]
+            [--db_prob Number]
+
+
+Arguments:
+  --pwm 		        file            position weight matrix file (motif) which you want to search. .mlp format
+  --db_path 		    path or list	path to clustered dbds according to the hierarchy of abc4pwm.if db_type=list then then this paramter should be list of pwms, against whcih you are searching the pwm
+  --output_directory 	FOLDER		    This folder should to output folder. search_result.pdf output file will be stored here.
 
 optional arguments:
   -h, --help            show this help message and exit
-  --pwm 		. mlp file      position weight matrix file (motif) which you want to search. .mlp format
-  --db_path 		path or list	path to clustered dbds according to the hierarchy of abc4pwm.if db_type=list then then this paramter should be list of pwms, against whcih you are searching the pwm
-  --output_directory 	FOLDER		This folder should to output folder. search_result.pdf output file will be stored here.
-  --db_type 		string      	(Optional) If database for comparison is folder hierarchy like abs4pwm then this willbe db_type=path. Write list if providing list of pwms for comparison
-  --db_format 		string    	(Optional) If database for comparison have format, please mention.Supported formats are abc4pwm, Tranfac, Jaspar. default is abc4pwm
-  --top_n 		NUMBER        	(Optional) Number of top matches from the database. Default 5
-  --input_count NUMBER  (Optional) 1 if input file contains values in counts
-  --db_count NUMBER     1 if database file contains values in counts
-  --db_file_type String
-                        mention the extension of file type. e.g., .mlp, .txt
-  --input_file_type String
-                        mention the extension of file type. e.g., .mlp, .txt
-  --input_prob Number   (Optional) 1 if input file contains values in probabilities
-  --db_prob Number      (Optional) 1 if databas file contains values in probabilities
+  --tf_name             string      If you want to search specific tf in a folder then use this parameter
+  --db_type 		    string      If database for comparison is folder hierarchy like abs4pwm then this willbe db_type=path. Write list if providing list of pwms for comparison
+  --db_format 		    string    	If database for comparison have format, please mention.Supported formats are abc4pwm, Tranfac, Jaspar. default is abc4pwm
+  --top_n 		        NUMBER      Number of top matches from the database. Default 5
+  --input_count         NUMBER      1 if input file contains values in counts
+  --db_count            NUMBER      1 if database file contains values in counts
+  --db_file_type        String      mention the extension of file type. e.g., .mlp, .txt
+  --input_file_type     String      mention the extension of file type. e.g., .mlp, .txt
+  --input_prob          Number      1 if input file contains values in probabilities
+  --db_prob             Number      1 if databas file contains values in probabilities
 ----------------------------------conversion----------------------------------
 usage: abc4pwm conversion [-h]
                     [--pwm_files_directory FOLDER]
@@ -253,15 +272,20 @@ usage: abc4pwm ensemble_learning [-h] [--opt_dependence Number]
                                  [--opt_normalization Number]
                                  [--max_processors Number]
 
+
+Arguments:
+  --expFile File        path        Strong Expression file path
+  --opt_seqFile         path        Strong sequence file path.
+
+
+
 optional arguments:
   -h, --help                        show this help message and exit
   --opt_dependence      Number      Define dependence, Default is 0.
   --numP                Number      number of times random selections will be done. Default is 15
   --opt_numOfWeakReads  Number      number of weak read if any. Default 0.
   --number_of_genes     Number      number of genes to be selected from input. Default is 200
-  --expFile File        path        Strong Expression file path
   --opt_weak_expFile    File path   Weak expression file path.
-  --opt_seqFile         File path   Strong sequence file path.
   --opt_out             File path.  output folder path.
   --opt_loops           Number      Number of loops to repeat calculations. Default is 3.
   --opt_min_L           Number      Minimum length for predicted pwm (motif), Default is 9.
@@ -271,107 +295,68 @@ optional arguments:
   --opt_strand          Number      Strand.     Default is 0
   --opt_normalization   Number      Normalization value. Default is 2.
   --max_processors      Number      Define maximum number of processors for parallel computing. Default is mp.cpu_count()
+  --seed Number         Number      Seed for random selection. Default seed is 0(random).
+
 
 ----------------------------------ensemble investigate--------------------------
 usage: abc4pwm ensemble_investigate [-h]
                                     [--path_to_predicted_files . mlp file]
                                     [--db_folder path or list]
                                     [--output_folder FOLDER]
-                                    [--tf_name string] [--db_type string]
-                                    [--top_n TOP_N]
-                                    [--min_pwms_in_cluster MIN_PWMS_IN_CLUSTER]
+                                    [--tf_name string]
+                                    [--db_type string]
+                                    [--top_n Number]
+                                    [--dst_for_bad_pwms path]
+                                    [--mean_threshold NUMBER]
+                                    [--z_score_threshold NUMBER]
+                                    [--top_occurrences NUMBER]
+                                    [--occurrences_threshold NUMBER]
+                                    [--ic_for_rep NUMBER]
+                                    [--min_pwms_in_cluster Number]
                                     [--db_format string]
-                                    [--input_count NUMBER] [--db_count NUMBER]
+                                    [--input_count NUMBER]
+                                    [--db_count NUMBER]
                                     [--db_file_type String]
                                     [--input_file_type String]
-                                    [--input_prob Number] [--db_prob Number]
+                                    [--input_prob Number]
+                                    [--db_prob Number]
+                                    [--qa Number]
+                                    [--seed Number]
+                                    [--damp Number]
+                                    [--max_iter Number]
+                                    [--convergence_iter Number]
+                                    [--preference Number]
+
+Arguments:
+  --path_to_predicted_files     .mlp files      Folder which contain predicted files.
+  --db_folder                   path or list    path to clustered dbds according to the hierarchy of abc4pwm.if db_type=list then then this paramter should be list of pwms, against whcih you are searching the pwm
+  --output_folder               FOLDER          This folder should to output folder. search_result.pdf output file will be stored here.
+
 
 optional arguments:
   -h, --help            show this help message and exit
-  --path_to_predicted_files     .mlp file       Folder which contain predicted files.
-  --db_folder                   path or list    path to clustered dbds according to the hierarchy of abc4pwm.if db_type=list then then this paramter should be list of pwms, against whcih you are searching the pwm
-  --output_folder               FOLDER          This folder should to output folder. search_result.pdf output file will be stored here.
-  --tf_name                     String          (Optional) If you want to search specific tf in a folder then use this parameter
-  --db_type                     String          (Optional) If database for comparison is folder hierarchy like abs4pwm then this willbe db_type=path. Write list if providing list of pwms for comparison
+  --tf_name                     String          If you want to search specific tf in a folder then use this parameter
+  --db_type                     String          If database for comparison is folder hierarchy like abs4pwm then this will be db_type=path. Write list if providing list of pwms for comparison
   --top_n                       Number          Specify how many top matches from database is required. Default 2
   --min_pwms_in_cluster         Number          Number of minimum acceptable pwms in a cluster made from predicted pwms. Default 3
-  --db_format                   string          (Optional) If database for comparison have format, please mention.Supported formats are abc4pwm, Tranfac, Jaspar. default is abc4pwm
-  --input_count                 NUMBER          (Optional) 1 if input file contains values in counts
+  --db_format                   string          If database for comparison have format, please mention.Supported formats are abc4pwm, Tranfac, Jaspar. default is abc4pwm
+  --input_count                 NUMBER          1 if input file contains values in counts
   --db_count                    NUMBER          1 if database file contains values in counts
   --db_file_type                String          mention the extension of file type. e.g., .mlp, .txt
   --input_file_type             String          mention the extension of file type. e.g., .mlp, .txt
-  --input_prob                  Number          (Optional) 1 if input file contains values in probabilities
-  --db_prob                     Number          (Optional) 1 if database file contains values in probabilities
+  --input_prob                  Number          1 if input file contains values in probabilities
+  --db_prob                     Number          1 if database file contains values in probabilities
+  --ic			                NUMBER          Information Content for trimming edges.Default value is 0.4
+  --qa                          Bool            1 if quality assessment of predicted files (clusters) is need, 0 is by default.
+  --seed                        Number          Seed for random selection of cluster center. Input 1 to fix. Default Seed is 0.
+  --damp                        Number          Damping factor (between 0.5 and 1) is the extent to which the current value is maintained relative to incoming values (weighted 1 - damping).
+                                                This in order to avoid numerical oscillations when updating these values (messages).
+  --max_iter                    Number          Maximum number of iterations.
+  --convergence_iter            Number          Number of iterations with no change in the number of estimated clusters that stops the convergence.
+  --preference                  Number          Preferences for each point - points with larger values of preferences are more likely to be chosen as exemplars.
+                                                The number of exemplars, ie of clusters, is influenced by the input preferences value. If the preferences are not passed as arguments,
+                                                they will be set to the median of the input similarities.
 
 
 ----------------------------Example-------------------
-Assuming a folder with the name 'data' already exists with two more folders inside. 1. 'in/' 2. 'out/'. 'in' further has two more folders, in_pwms  and pwms_original. It should look like this
-data/in/in_pwms (your input files, position weight matrices, in .mlp should be inside in_pwms)
-data/in/pwms_original (a copy of input files, position weight matrices, in .mlp should be inside pwms_original)
-
-data/out/
-
-Then run the following while current working directory should be 'data/'
-
-# run following in data folder
-
-
-# run following in data folder
-abc4pwm cleandatabase_for_classification --pwm_files_directory in/in_pwms/ --read_new 0
-
-abc4pwm classification --pwm_files_directory in/in_pwms/ --output_directory out/classification_out/ --original_pwm_files_directory in/pwm_original/
-
-abc4pwm clustering --dbd_folders_directory out/classification_out/ --output_directory out/clustering_out/
-
-abc4pwm quality_assessment --dbd_folders_directory out/clustering_out/ --out_path_for_qa_clusters out/quality_assessed_out/ --output_folder_for_text_report out/reports_in_text/ --output_path_for_quality_assessment_file in/ --load_new_assesment 1
-
-abc4pwm representative_motif --path_to_clusters out/quality_assessed_out/HMG/out/ --clusters 0,1,2
-#representative for all dbds and all folders
-abc4pwm representative_motif --path_to_clusters out/quality_assessed_out/ --clusters all --dbd all
-
-abc4pwm visualize --path_to_folder_of_assessment_file in/ --path_to_folder_of_DBDs out/quality_assessed_out/ --output_folder out/plots/boxplots/ --dbd_for_plot out/quality_assessed_out/HMG/
-#to visualize all dbds box plots
-abc4pwm visualize --path_to_folder_of_assessment_file in/ --path_to_folder_of_DBDs out/quality_assessed_out/ --output_folder out/plots/boxplots/ --dbd_for_plot all
-
-
-abc4pwm plot_cluster_motifs --path_to_clusters out/quality_assessed_out/HMG/out/ --output_folder_pdfs out/plots/pdfs --clusters 0,1,4
-#plot motifs for all cluster of a dbd
-abc4pwm plot_cluster_motifs --path_to_clusters out/quality_assessed_out/HMG/out/ --output_folder_pdfs out/plots/pdfs --clusters all
-#plot motifs for all cluster of all dbd
-abc4pwm plot_cluster_motifs --path_to_clusters out/quality_assessed_out/ --output_folder_pdfs out/plots/pdfs --clusters all --dbd all
-
-
-abc4pwm text_tfdb --pwm_files_directory in/in_pwms/ --output_directory out/reports_in_text/
-
-
-#for clustering the uncertain pwms
-abc4pwm clustering --dbd_folders_directory out/uncertain_pwms/ --output_directory out/uncertain_clustering_out/ --in_dbd 0
-
-#for clustering the all together pwms
-abc4pwm clustering --dbd_folders_directory in/in_pwms/ --output_directory out/all_clustering_out/ --in_dbd 0
-
-
-#for searching in a transfac folder
-abc4pwm searching --pwm in/in_pwms/AP1_known1_from_AP1_2_from_AP-1_transfac_M00172.mlp --db_path out/convert/to_transfac/ --output_directory out/search_out/ --db_type folder --db_format transfac
-
-#for searching in a jaspar folder
-abc4pwm searching --pwm in/in_pwms/AP1_known1_from_AP1_2_from_AP-1_transfac_M00172.mlp --db_path out/convert/to_jaspar/ --output_directory out/search_out/ --db_type folder --db_format jaspar
-
-#for searching in a abc4pwm folder
-abc4pwm searching --pwm in/in_pwms/AP1_known1_from_AP1_2_from_AP-1_transfac_M00172.mlp --db_path in/in_pwms/ --output_directory out/search_out/ --db_type folder
-
-#for format conversion
-#abc4pwm to transfac
-abc4pwm conversion --pwm_files_directory in/in_pwms/ --in2out abc4pwm2transfac --output_folder out/convert/to_transfac/
-
-#transfac to abc4pwm
-abc4pwm conversion --pwm_files_directory out/convert/to_transfac/ --in2out transfac2abc4pwm --output_folder out/convert/to_abc/
-
-#abc4pwm to jaspar
-abc4pwm conversion --pwm_files_directory in/in_pwms/ --in2out abc4pwm2jaspar --output_folder out/convert/to_jaspar/
-
-#jaspar to abc4pwm
-abc4pwm conversion --pwm_files_directory out/convert/to_jaspar/ --in2out jaspar2abc4pwm --output_folder out/convert/to_abc/
-
-#ensemble learning
-abc4pwm ensemble_learning --opt_strong_expFile in/expression/demo_swi4_0.5Kseq_cacgaaaa_500.txt --opt_seqFile in/seq/demo_swi4_0.5Kseq_cacgaaaa_500.fa --opt_out out/ensemble/swi4/ --select_random_n 200
+Examples of all modules are given in demo folder
