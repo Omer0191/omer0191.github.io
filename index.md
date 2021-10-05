@@ -119,7 +119,7 @@ For more detials, follow the readme file in the package
 	<li><code>ensemble_learning</code> : A module to predict pwms using bayesPI with ensemble learning.</li>
 	<li><code>ensemble_investigate</code>: A module to cluster and search the predicted pwms against a database.</li>
 	<li><code>conversion</code>: Conversion of files from one (e.g., ab4pwm) to other (e.g., TRANSFAC, JASPAR).</li>
-	<li><code>conversion</code>: A module to search a TF pwm (motif) against the database..</li>
+	<li><code>searching</code>: A module to search a TF pwm (motif) against the database..</li>
 
 
 
