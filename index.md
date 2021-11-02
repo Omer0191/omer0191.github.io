@@ -6,11 +6,11 @@ abc4pwm is a software tool for clustering of pwms, classficiation of pwms to the
 
 ## Authors:
 
-  <p align="center"><strong> Omer Ali <sup>1</sup>, Amna Farooq <sup>1</sup>, Mingyi Yang <sup>3</sup><sup>4</sup>, Magnar Bjørås <sup>3,7</sup>, Victor Jin<sup>5</sup>,  Junbai Wang <sup>1*,2,6</sup> </strong></p>
+  <p align="center"><strong> Omer Ali <sup>1</sup>, Amna Farooq <sup>1</sup>, Mingyi Yang <sup>3,4</sup>, Magnar Bjørås <sup>3,7</sup>, Victor Jin<sup>5</sup>,  Junbai Wang <sup>1*,2,6</sup> </strong></p>
   
   <p align="center">1. Department of Pathology, Oslo University Hospital - Norwegian Radium Hospital, Oslo, Norway </p>
   <p align="center">2. Department of Clinical Molecular Biology in University of Oslo, Norway </p>
-  <p align="center">3. Department of Microbiology, Oslo University Hospital Rikshospitalet, Oslo, Norway </p>
+  <p align="center">3. Department of Medical Biochemistry, Oslo University Hospital and University of Oslo, Oslo, Norway</p>
   <p align="center">4. Department of Microbiology, Oslo University Hospital and University of Oslo, Oslo, Norway. </p>
   <p align="center">5. Department of Molecular Medicine, University of Texas Health San Antonio, San Antonio, TX, USA </p>
   <p align="center">6. Department of clinical molecular biology (EpiGen), Akershus University Hospital, Lørenskog, Norway </p>
