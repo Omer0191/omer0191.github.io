@@ -47,7 +47,7 @@ abc4pwm is a software tool for clustering of pwms, classficiation of pwms to the
 
 
 ## How to start:
-
+<div class="container-fluid abstract_des">
 abc4pwm is written in python. It can be installed and accessed from command line and is avalible for both linux and mac operating systems. The package can be downloaded <strong><a href="abc4pwm_code_demo.tgz">The package can be downloaded here</a></strong>(www.github.com/abc4pwm)
 
 Prior to installing the package, dependencies must be fulfilled. List of dependencies is as follows:
@@ -86,7 +86,7 @@ It is advised to install dependencies using miniconda.
 Package contains a file requirments.txt which can be used for automatic installation of dependencies from conda or pip.
 To install the package, go to the AffinityPropogation_Clustering directory and type: python setup.py install
 For more detials, follow the readme file in the package
-
+</div>
 ## Contents of the package:
 
 
@@ -106,7 +106,7 @@ For more detials, follow the readme file in the package
 
 
 ## Pipeline Tasks:
-
+<div class="container-fluid abstract_des">
 <p>The pipeline consists of follwoing tasks. To run a task, type abc4pwm <task> [<args>]. To see what are the options for each task of the pipeline, please run: abc4pwm -h </p>
 
 <ul>
@@ -127,13 +127,13 @@ For more detials, follow the readme file in the package
 
 </ul>	
 
-
-  
-  ## Demo
-  
+	</div>
+## Demo
+<div class="container-fluid abstract_des">
 
 <p>Test run is available on human pwms data, present in demo folder.
 In folder abc4pwm/demo , there demos of all modules and study cases which can be run by entering: ./demo , in the command line to run the demo automatically.
 In folder abc4pwm/demo , there demos of all modules and study cases. </p>
 
 Having trouble with package? Contact us [here] (omerali.0191@gmail.com) (junbai.wang@medisin.uio.no) and we’ll help you sort it out.
+	</div>
