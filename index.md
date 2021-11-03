@@ -133,4 +133,4 @@ For more detials, follow the readme file in the package
 In folder abc4pwm/demo , there demos of all modules and study cases which can be run by entering: ./demo , in the command line to run the demo automatically.
 In folder abc4pwm/demo , there demos of all modules and study cases. </p>
 
-Having trouble with package? Contact us [here] (omerali.0191@gmail.com) (junbai.wang@medisin.uio.no) and we’ll help you sort it out.
+Having trouble with package? Contact us @ omerali.0191@gmail.com, junbai.wang@medisin.uio.no and we will be glad to help you.
