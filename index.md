@@ -87,9 +87,9 @@ Package contains a file requirments.txt which can be used for automatic installa
 To install the package, go to the AffinityPropogation_Clustering directory and type: python setup.py install
 For more detials, follow the readme file in the package
 </div>
+	
 ## Contents of the package:
-
-
+<div class="container-fluid abstract_des">
 		
 <p>The package folder will contain following:</p>
 <ul>
@@ -103,7 +103,7 @@ For more detials, follow the readme file in the package
 
 </ul>	
 
-
+	</div>
 
 ## Pipeline Tasks:
 <div class="container-fluid abstract_des">
