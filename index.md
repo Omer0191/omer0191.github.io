@@ -38,17 +38,17 @@ abc4pwm is a software tool for clustering of pwms, classficiation of pwms to the
 
 <div class="row"> 
 	<p> 
-	<b>Background:</b> With the advent of information technology and its use for biological applications, new high throughput methods have produced motifs with an ever-increasing number of collections. These collections are maintained in different Transcription Factor (TF) databases generated from numerous sources. These collections are combined by Meta-Databases which produces redundancy as there is no any efficient and automatic way of combining biologically relevant motifs by making groups of similar looking position weight matrices(PWMs). During the analysis of genome wide datasets, production of motifs is another cause of redundancy. This require a tool which can efficiently group together similar position weight matrices and may replace this group with the help of representative motif.</p>
-	<p><b>Results:</b> This work presents a pipeline package for clustering the PWMs and then calculate a representative consensus motif for each cluster. This task is done by first assigning a DNA-Binding Domain (DBD) family name to every motif and classifying them on the basis of respective DBDs. Affinity Propagation Clustering is then applied within each DBD family which make clusters of similar motifs. The mean or consensus of these clusters is then calculated which act as representative of the respective cluster. This work also shows a unique way of calibrating cluster quality with four different measures and extracts non similar motifs from the clusters. A clean uniform database creation of TFs, classification of pwms, quality measurement, motif searching, ensemble learing, reports of classification and database in text files are some other features of the package.</p>
-	<p><b>Conclusion:</b> Similar TFs were assigned a cluster and representative was calculated for each cluster. It helped to reduce redundancy by many folds. Automatic cluster quality analysis is a feature of this pipeline which makes it unique from existing tools and solves the complexity of pwms which is variable length matrices. A command line software pipeline is available online for both mac and linux.
+	<b>Background:</b> Applications of high throughput sequencing technology in protein-DNA interactions generate transcription factor (TF) binding motifs with an ever-increasing number of collections, which are maintained in different databases generated from numerous sources. There is lack efficient tools to cluster biologically relevant or similar motifs such as position weight matrices (PWMs), from either experimental detection or in silico predictions. Moreover, an automatic clustering quality assessment method is needed for the quality evaluation of clusters of PWMs.</p>
+	<p><b>Results:</b> This work presents a new package Affinity Based Clustering for Position Weight Matrices (abc4pwm), either with or without DNA-Binding Domain (DBD) information. Abc4pwm is able to generate a representative motif for each cluster, to evaluate the clustering quality of PWMs automatically, and filter out wrongly clustered PWMs. Additionally, it can update human DBD family database automatically, classify known human TF PWMs to the respective DBD family, and perform TF motif searching and motif discovery by a new ensemble learning approach.</p>
+	<p><b>Conclusion:</b> Applications of abc4pwm in the DNA sequence analysis for several high throughput sequencing data (e.g., RNA-seq and ChIP-seq data) are demonstrated by using ~1770 human TF PWMs. It not only recovers known TF motifs at gene promoters based on gene expression profiles, but also identifies true TF binding targets according to ChIP- seq experiments. Both the clustering of PWMs and the automatic quality assessment for the clusters significantly reduce the computational time in data analysis, and enhance the biological meaningful interpretations. Abc4pwm is a useful tool in DNA sequence analysis.
 </p>
 	
 </div>
 
 
 ## How to start:
-
-abc4pwm is written in python. It can be installed and accessed from command line and is avalible for both linux and mac operating systems. The package can be downloaded [here] (www.github.com/abc4pwm)
+<div class="container-fluid abstract_des">
+abc4pwm is written in python. It can be installed and accessed from command line and is avalible for both linux and mac operating systems. The package can be downloaded <strong><a href="abc4pwm_code_demo.tgz">The package can be downloaded here</a></strong>(www.github.com/abc4pwm)
 
 Prior to installing the package, dependencies must be fulfilled. List of dependencies is as follows:
 <ul>
@@ -86,10 +86,10 @@ It is advised to install dependencies using miniconda.
 Package contains a file requirments.txt which can be used for automatic installation of dependencies from conda or pip.
 To install the package, go to the AffinityPropogation_Clustering directory and type: python setup.py install
 For more detials, follow the readme file in the package
-
+</div>
+	
 ## Contents of the package:
-
-
+<div class="container-fluid abstract_des">
 		
 <p>The package folder will contain following:</p>
 <ul>
@@ -104,9 +104,8 @@ For more detials, follow the readme file in the package
 </ul>	
 
 
-
 ## Pipeline Tasks:
-
+<div class="container-fluid abstract_des">
 <p>The pipeline consists of follwoing tasks. To run a task, type abc4pwm <task> [<args>]. To see what are the options for each task of the pipeline, please run: abc4pwm -h </p>
 
 <ul>
@@ -127,13 +126,11 @@ For more detials, follow the readme file in the package
 
 </ul>	
 
-
-  
-  ## Demo
-  
+## Demo
+<div class="container-fluid abstract_des">
 
 <p>Test run is available on human pwms data, present in demo folder.
 In folder abc4pwm/demo , there demos of all modules and study cases which can be run by entering: ./demo , in the command line to run the demo automatically.
 In folder abc4pwm/demo , there demos of all modules and study cases. </p>
 
-Having trouble with package? Contact us [here] (omerali.0191@gmail.com) (junbai.wang@medisin.uio.no) and we’ll help you sort it out.
+Having trouble with package? Contact us @ omerali.0191@gmail.com, junbai.wang@medisin.uio.no and we will be glad to help you.
