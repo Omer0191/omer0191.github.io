@@ -103,7 +103,6 @@ For more detials, follow the readme file in the package
 
 </ul>	
 
-	</div>
 
 ## Pipeline Tasks:
 <div class="container-fluid abstract_des">
@@ -127,7 +126,6 @@ For more detials, follow the readme file in the package
 
 </ul>	
 
-	</div>
 ## Demo
 <div class="container-fluid abstract_des">
 
@@ -136,4 +134,3 @@ In folder abc4pwm/demo , there demos of all modules and study cases which can be
 In folder abc4pwm/demo , there demos of all modules and study cases. </p>
 
 Having trouble with package? Contact us [here] (omerali.0191@gmail.com) (junbai.wang@medisin.uio.no) and we’ll help you sort it out.
-	</div>
