@@ -91,7 +91,8 @@ For more detials, follow the readme file in the package
 ## Contents of the package:
 <div class="container-fluid abstract_des">
 		
-<p>The package folder will contain following:</p>
+<p>The package folder will contain following:
+	</p>
 <ul>
 	<li><code>demo</code> : Contains demo data sets.</li>
 	<li><code>abc4pwm</code> : Contains python soruce code of pipeline.</li>
