@@ -31,7 +31,8 @@ abc4pwm is a software tool for clustering of pwms, classficiation of pwms to the
 
 </head>
 
-
+## Cite this article
+Ali, O., Farooq, A., Yang, M. et al. abc4pwm: affinity based clustering for position weight matrices in applications of DNA sequence analysis. BMC Bioinformatics 23, 83 (2022). https://doi.org/10.1186/s12859-022-04615-z
 
 ## Abstract
 <div class="container-fluid abstract_des">
