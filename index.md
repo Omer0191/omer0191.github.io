@@ -48,7 +48,7 @@ abc4pwm is a software tool for clustering of pwms, classficiation of pwms to the
 
 ## How to start:
 <div class="container-fluid abstract_des">
-abc4pwm is written in python. It can be installed and accessed from command line and is avalible for both linux and mac operating systems. The package can be downloaded <strong><a href="abc4pwm_code_demo.tgz">The package can be downloaded here</a></strong>(www.github.com/abc4pwm)
+abc4pwm is written in python. It can be installed and accessed from command line and is avalible for both linux and mac operating systems. The package can be downloaded <strong><a href="[abc4pwm_code_demo.tgz](https://github.com/abc4pwm/abc4pwm)">The package can be downloaded here</a></strong>(www.github.com/abc4pwm)
 
 Prior to installing the package, dependencies must be fulfilled. List of dependencies is as follows:
 <ul>
