@@ -1,5 +1,6 @@
 ![helsesorost](https://user-images.githubusercontent.com/79196757/116503417-50eaa000-a8b6-11eb-9925-382c86dc97c9.png) ![ous](https://user-images.githubusercontent.com/79196757/116503445-652e9d00-a8b6-11eb-8985-df71a9a4b9f2.png)
 
+<head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-2D7L85HVYY"></script>
 <script>
@@ -9,7 +10,7 @@
 
   gtag('config', 'G-2D7L85HVYY');
 </script>
-
+</head>
 # ABC4PWM
 
 abc4pwm is a software tool for clustering of pwms, classficiation of pwms to their DNA binding Domain, motif search, and other supportive modules.
